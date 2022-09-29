@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from routes.auth import routes_auth
 from routes.analyse import route_analyse
 from dotenv import load_dotenv
@@ -18,6 +18,14 @@ app.config.from_object('config.ProdConfig')
 app.register_blueprint(routes_auth, url_prefix='/api')
 app.register_blueprint(route_analyse, url_prefix='/api')
 
+@app.route("/")
+def index():
+    return jsonify({"message":"WELCOME TO SENTIMENT ANALYSIS!"})
+
+#Error handler
+@app.errorhandler(404)
+def error(e):
+    return jsonify({"message":"Not Found!"}), 404
 
 if __name__ == "__main__":
     load_dotenv()
