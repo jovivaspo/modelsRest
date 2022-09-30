@@ -4,4 +4,4 @@ python-dotenv
 pyjwt[crypto]
 -f https://download.pytorch.org/whl/torch_stable.html
 torch==1.11.0+cpu
-waitress
+gunicorn

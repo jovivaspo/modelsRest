@@ -2,16 +2,20 @@ from flask import Flask, jsonify
 from routes.auth import routes_auth
 from routes.analyse import route_analyse
 from dotenv import load_dotenv
-from waitress import serve
+from os import getenv
 
 
 app = Flask(__name__)
 
-# Using a production configuration
-app.config.from_object('config.ProdConfig')
+load_dotenv()
 
-# Using a development configuration
-#app.config.from_object('config.DevConfig')
+#Set up config dev or prod
+if getenv("CONFIG") == "DEV":
+    # Using a development configuration
+    app.config.from_object('config.DevConfig')
+else:
+    # Using a production configuration
+    app.config.from_object('config.ProdConfig')
 
 
 #Routes:
@@ -27,10 +31,7 @@ def index():
 def error(e):
     return jsonify({"message":"Not Found!"}), 404
 
-if __name__ == "__main__":
-    load_dotenv()
-    #app.run(debug=True, c)
-    print("Server running")
-    serve(app, host='0.0.0.0', port=5000) 
+
+   
 
 
