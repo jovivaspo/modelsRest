@@ -1,4 +1,4 @@
-FROM python:3.6.12-alpine
+FROM python:3.6-slim
 
 WORKDIR /code
 
@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . /code
 
-ENTRYPOINT ["./gunicorn.sh"]
+CMD ["gunicorn", "run:app", "-b", "0.0.0.0:5000"]
