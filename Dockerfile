@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM python:3
 
 WORKDIR /code
 
@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . /code
 
-CMD ["gunicorn", "run:app", "-b", "0.0.0.0:5000"]
+CMD ["gunicorn", "--timeout", "600","--workers", "2", "run:app", "-b", "0.0.0.0:5000"]
