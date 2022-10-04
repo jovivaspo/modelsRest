@@ -21,7 +21,11 @@ def analyse(text):
             model_path = 'cardiffnlp/twitter-roberta-base-sentiment-latest'
             sentiment_task = pipeline("sentiment-analysis", model=model_path, tokenizer=model_path)
             sentiment = sentiment_task(text)
-            return sentiment
+            response = jsonify({"label":sentiment[0]['label'],
+            "score":sentiment[0]['score']
+            })
+            response.status_code = 200
+            return response
 
       except Exception as e:
             response = jsonify({"menssage":"Error to analysing"})
