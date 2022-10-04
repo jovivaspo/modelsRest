@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, abort
-from models.analyse_sentiment import analyse
-from function_jwt import validate_token
+from src.models.analyse_sentiment import analyse
+from src.function_jwt import validate_token
 
 route_analyse = Blueprint("route_analyse", __name__)
 

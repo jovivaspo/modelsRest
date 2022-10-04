@@ -1,8 +1,9 @@
 from flask import Flask, jsonify
-from routes.auth import routes_auth
-from routes.analyse import route_analyse
+from src.routes.auth import routes_auth
+from src.routes.analyse import route_analyse
 from dotenv import load_dotenv
 from os import getenv
+from src.config import config
 
 def create_app():
 
@@ -10,14 +11,9 @@ def create_app():
 
     load_dotenv()
 
-    #Set up config dev or prod
-    if getenv("CONFIG") == "DEV":
-        # Using a development configuration
-        app.config.from_object('config.DevConfig')
-    else:
-        # Using a production configuration
-        app.config.from_object('config.ProdConfig')
+    config_name = getenv("CONFIG")
 
+    app.config.from_object(config.get(config_name or 'default'))
 
     #Routes:
     app.register_blueprint(routes_auth, url_prefix='/api')

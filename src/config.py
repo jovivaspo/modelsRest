@@ -15,3 +15,10 @@ class DevConfig(Config):
     DEBUG = True
     TESTING = True
 
+
+config = {
+    'dev': DevConfig,
+    'prod': ProdConfig,
+    'default': DevConfig,
+}
+
