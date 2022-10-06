@@ -10,11 +10,7 @@ def login():
         data = request.get_json()
         if data['username'] == getenv("USERNAME_APP") and data['password'] == getenv("PASSWORD_APP"):
             return write_token(data)
-        response = jsonify({"message":"Username or password not correct: ",
-        "data":data,
-        "username": getenv("USERNAME_APP"),
-        "password":getenv("PASSWORD_APP")
-        })
+        response = jsonify({"message":"Username or password not correct"})
         response.status_code = 403
         return response
     except:
