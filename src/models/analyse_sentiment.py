@@ -1,10 +1,19 @@
 from flask import abort, jsonify
-from transformers import pipeline
+from transformers import AutoModelForSequenceClassification
+from transformers import TFAutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoConfig
+import numpy as np
+from scipy.special import softmax
 
-model_path = "cardiffnlp/twitter-roberta-base-sentiment-latest"
+
+MODEL = "cardiffnlp/twitter-roberta-base-sentiment-latest"
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+config = AutoConfig.from_pretrained(MODEL)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL)
 
 def analyse(text):
       try:
+
             if(text == ""):
                    response = jsonify({"menssage":"Field text is empty"})
                    response.status_code = 400
@@ -18,11 +27,18 @@ def analyse(text):
                   new_text.append(t)
 
             text = " ".join(new_text)
-            model_path = 'cardiffnlp/twitter-roberta-base-sentiment-latest'
-            sentiment_task = pipeline("sentiment-analysis", model=model_path, tokenizer=model_path)
-            sentiment = sentiment_task(text)
-            response = jsonify({"label":sentiment[0]['label'],
-            "score":sentiment[0]['score']
+
+            encoded_input = tokenizer(text, return_tensors='pt')
+            output = model(**encoded_input)
+            scores = output[0][0].detach().numpy()
+            scores = softmax(scores)
+            ranking = np.argsort(scores)
+            ranking = ranking[::-1]
+            label = config.id2label[ranking[0]]
+            score = scores[ranking[0]]
+            print(label,score)
+            response = jsonify({"label":label,
+            "score": str(round(score,2))
             })
             response.status_code = 200
             return response

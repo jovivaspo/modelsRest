@@ -22,9 +22,9 @@ def analyse_sentiment():
         text = request.json['text']
         return analyse(text)
 
-    except:
-        response = jsonify({"menssage":"Field text is required"})
-        response.status_code = 400
-        abort(response)
+    except KeyError:
+            response = jsonify({"menssage":"Field text is required"})
+            response.status_code = 400
+            abort(response)
 
 
