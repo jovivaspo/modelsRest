@@ -6,6 +6,10 @@ An example of serving a Transformer model with Flask, Gunicorn and JsonWebToken.
 
 Create a new file .env and define the variables: USERNAME_APP, PASSWORD_APP, SECRET_KEY and CONFIG.
 
+Create an environment
+
+`python3 -m venv venv`
+
 `cd ../venv/Script/activate`
 
 `pip install -r requirements.txt`
