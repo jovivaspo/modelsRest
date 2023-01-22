@@ -1,9 +1,10 @@
 from flask import Flask, jsonify
-from src.routes.auth import routes_auth
-from src.routes.analyse import route_analyse
+from src.api_auth import route_auth
+from src.api_analyse import route_analyse
 from dotenv import load_dotenv
 from os import getenv
 from src.config import config
+from src.api_auth import api
 
 def create_app():
 
@@ -16,8 +17,8 @@ def create_app():
     app.config.from_object(config.get(config_name or 'default'))
 
     #Routes:
-    app.register_blueprint(routes_auth, url_prefix='/api')
-    app.register_blueprint(route_analyse, url_prefix='/api')
+    app.register_blueprint(route_auth)
+    app.register_blueprint(route_analyse)
 
     @app.route("/")
     def index():

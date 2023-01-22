@@ -5,4 +5,6 @@ pyjwt[crypto]
 torch
 gunicorn
 scipy
+flask-restx
+
 

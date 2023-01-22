@@ -1,10 +1,22 @@
-from flask import Blueprint, request, jsonify, abort
+from flask import  request, jsonify, abort
 from src.models.analyse_sentiment import analyse
 from src.function_jwt import validate_token
+from flask_restx import Namespace, Resource, fields
 
-route_analyse = Blueprint("route_analyse", __name__)
 
-@route_analyse.before_request
+api = Namespace("Analysis", description="Sentiment analysis", path="/analyse")
+
+text_model = api.model("Text",{
+    'text':fields.String(required=True, description="Text to analyse"),
+
+})
+
+result_model = api.model("Result",{
+  'label':fields.String(required=True, description="Positive or negative"),
+  'score':fields.String(required=True, description="Scoring of the analysis 0-1")
+})
+
+@api.before_request
 def verify_token():
     try:
         token = request.headers['Authorization'].split(" ")[1]
@@ -16,8 +28,13 @@ def verify_token():
 
 
 
-@route_analyse.route("/analyse", methods = ["POST"])
-def analyse_sentiment():
+@api.route("/analyse", methods = ["POST"])
+class Register(Resource):
+  '''Login in the Api and receive token'''
+  @api.expect(text_model)
+  @api.response(400,"Text is required")
+  @api.marshal_with(result_model)
+  def analyse_sentiment():
     try:
         text = request.json['text']
         return analyse(text)
