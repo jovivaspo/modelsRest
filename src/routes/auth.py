@@ -1,9 +1,9 @@
 from flask import  jsonify, request
-from src.function_jwt import write_token, validate_token
 from os import getenv
 from flask_restx import Namespace, Resource, fields
+from flask_jwt_extended import create_access_token
 
-api = Namespace("Auth", description="Login", path="/login")
+api = Namespace("login", description="Login")
 
 user_model = api.model("User",{
     'username':fields.String(required=True, description="Name of the user"),
@@ -11,28 +11,32 @@ user_model = api.model("User",{
 })
 
 token_model = api.model("Token",{
-    'token':fields.String(description='Access Token')
+    'access_token':fields.String(description='Access Token')
 })
 
-@api.route("/login", methods=["POST"])
-class Register(Resource):
-  '''Login in the Api and receive token'''
+@api.route("/", methods=["POST"])
+class Login(Resource):
+  '''
+  Login in the Api and receive token
+  '''
+
   @api.expect(user_model)
   @api.response(401,"Wrong credentials")
+  @api.response(400,"Bad Request")
   @api.marshal_with(token_model)
-  def login():
-    try:
-        data = request.get_json()
-        if data['username'] == getenv("USERNAME_APP") and data['password'] == getenv("PASSWORD_APP"):
-            return write_token(data)
-        response = jsonify({"message":"Username or password not correct"})
-        response.status_code = 401
-        return response
-    except:
-        response = jsonify({"message":"Username and password are required"})
-        response.status_code = 401
-        return response
+  def post(self):
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    
+    if username is "" or password is "":
+        api.abort(400, "Bad request")
 
+    if  username == getenv("USERNAME_APP") and  password == getenv("PASSWORD_APP"):
+        access_token = create_access_token(identity=data['username'])
+        return {"access_token": access_token}, 200
+    
+    api.abort(401,"Wrong credentials")
    
 
     

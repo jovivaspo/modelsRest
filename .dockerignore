@@ -1,3 +1,5 @@
-Dockerfile
 .git
 .gitignore
+/Requests
+/venv/*
+.env

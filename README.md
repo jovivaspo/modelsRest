@@ -1,6 +1,6 @@
 # api-ai-sentiment
 
-An example of serving a Transformer model with Flask, Gunicorn and JsonWebToken. API to sentiment analyse of tweets using the model cardiffnlp/twitter-roberta-base-sentiment-latest.
+An example of serving a Transformer model with Flask-restx, Gunicorn and JsonWebToken. API to sentiment analyse of tweets using the model cardiffnlp/twitter-roberta-base-sentiment-latest.
 
 ## Run the application
 
@@ -16,7 +16,9 @@ Create an environment
 
 `run.py`
 
-## Endpoint
+## Documentation
+
+You can review the documentation and available endpoints at http://localhost:5000/api/v1/
 
 ### Test the api
 
@@ -24,7 +26,7 @@ Create an environment
 
 ### Login. You will receive a token.
 
-` POST http://localhost:5000/api/login`
+` POST http://localhost:5000/api/v1/login/`
 
 `Content-Type: application/json`
 
@@ -32,7 +34,7 @@ Create an environment
 
 ### Analyzing sentiments
 
-` POST http://localhost:5000/api/analyse`
+` POST http://localhost:5000/api/v1/analyse/`
 
 `Content-Type: application/json`
 

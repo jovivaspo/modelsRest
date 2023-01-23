@@ -2,7 +2,8 @@
 from os import getenv
 
 class Config:
-    SECRET_KEY = getenv('SECRET_KEY')
+   JWT_SECRET_KEY = getenv('JWT_SECRET_KEY')
+   PROPAGATE_EXCEPTIONS = True
 
 
 class ProdConfig(Config):

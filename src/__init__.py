@@ -1,10 +1,9 @@
 from flask import Flask, jsonify
-from src.api_auth import route_auth
-from src.api_analyse import route_analyse
 from dotenv import load_dotenv
 from os import getenv
 from src.config import config
-from src.api_auth import api
+from flask_jwt_extended import JWTManager
+from src.api import blueprint
 
 def create_app():
 
@@ -16,10 +15,13 @@ def create_app():
 
     app.config.from_object(config.get(config_name or 'default'))
 
-    #Routes:
-    app.register_blueprint(route_auth)
-    app.register_blueprint(route_analyse)
+    app.register_blueprint(blueprint)
 
+    
+    jwt = JWTManager()
+    jwt.init_app(app)
+
+    #Routes:
     @app.route("/")
     def index():
         return jsonify({"message":"WELCOME TO SENTIMENT ANALYSIS!"})

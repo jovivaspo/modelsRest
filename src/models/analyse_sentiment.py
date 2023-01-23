@@ -12,13 +12,7 @@ config = AutoConfig.from_pretrained(MODEL)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL)
 
 def analyse(text):
-      try:
-
-            if(text == ""):
-                   response = jsonify({"menssage":"Field text is empty"})
-                   response.status_code = 400
-                   abort(response)
-                  
+      try:   
             new_text = []
 
             for t in text.split(" "):
@@ -36,17 +30,17 @@ def analyse(text):
             ranking = ranking[::-1]
             label = config.id2label[ranking[0]]
             score = scores[ranking[0]]
-            print(label,score)
-            response = jsonify({"label":label,
+            result = {"label":label,
             "score": str(round(score,2))
-            })
-            response.status_code = 200
-            return response
+            }
+            
+            return result
 
       except Exception as e:
-            response = jsonify({"menssage":"Error to analysing"})
-            response.status_code = 500
-            abort(response)
+            error = {"menssage":"Error to analysing"}
+            return error
+           
+            
 
 
 
