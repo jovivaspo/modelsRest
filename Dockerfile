@@ -1,14 +1,26 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.9-slim as compiler
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /code
+WORKDIR /app/
 
-COPY requirements.txt /code
+RUN python -m venv /opt/venv
+# Enable venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip install --upgrade pip
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -Ur requirements.txt
 
-RUN pip install -r requirements.txt --no-cache-dir
+FROM python:3.9-slim as runner
+WORKDIR /app/
+COPY --from=compiler /opt/venv /opt/venv
 
-COPY . /code
+# Enable venv
+ENV PATH="/opt/venv/bin:$PATH"
+COPY . /app/
 
-CMD ["gunicorn", "--timeout", "600","--workers", "4", "run:app", "-b", "0.0.0.0:5000"]
-
+# Iniciar la aplicación
+CMD ["gunicorn", \
+    "--bind", "0.0.0.0:5000", \
+    "--workers", "2", \
+    "--timeout", "600", \
+    "run:app"]
