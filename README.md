@@ -3,7 +3,7 @@
 It provides a set of endpoints that allow developers to integrate language models into their applications. Using Flask-restx, Gunicorn and JsonWebToken.<br>
 
 - Translate: facebook/nllb-200-distilled-600M
-- Extract Keyworks: sentence-transformers/distiluse-base-multilingual-cased-v2
+- Extract Keywords: sentence-transformers/distiluse-base-multilingual-cased-v2
 - Paraphrase: tuner007/pegasus_paraphrase
 - Summarize: google/pegasus-xsum
 - Analyse sentiment: cardiffnlp/twitter-roberta-base-sentiment-latest
