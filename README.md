@@ -1,6 +1,6 @@
 # ModelsRest
 
-An example of serving a Transformer model with Flask-restx, Gunicorn and JsonWebToken.Provides diferent tools made using Transformer Model. <br>
+It provides a set of endpoints that allow developers to integrate language models into their applications. Using Flask-restx, Gunicorn and JsonWebToken.<br>
 
 - Translate: facebook/nllb-200-distilled-600M
 - Extract Keyworks: sentence-transformers/distiluse-base-multilingual-cased-v2
