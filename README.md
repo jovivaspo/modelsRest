@@ -1,16 +1,22 @@
-# api-ai-sentiment
+# ModelsRest
 
-An example of serving a Transformer model with Flask-restx, Gunicorn and JsonWebToken. API to sentiment analyse of tweets using the model cardiffnlp/twitter-roberta-base-sentiment-latest.
+An example of serving a Transformer model with Flask-restx, Gunicorn and JsonWebToken.Provides diferent tools made using Transformer Model. <br>
+
+- Translate: facebook/nllb-200-distilled-600M
+- Extract Keyworks: sentence-transformers/distiluse-base-multilingual-cased-v2
+- Paraphrase: tuner007/pegasus_paraphrase
+- Summarize: google/pegasus-xsum
+- Analyse sentiment: cardiffnlp/twitter-roberta-base-sentiment-latest
 
 ## Run the application
 
-Create a new file .env and define the variables: USERNAME_APP, PASSWORD_APP, SECRET_KEY and CONFIG.
+Create a new file .env and define the variables: USERNAME_APP, PASSWORD_APP, JWT_SECRET_KEY and CONFIG.
 
 Create an environment
 
 `python3 -m venv venv`
 
-`cd ../venv/Script/activate`
+`cd venv/Scripts/activate`
 
 `pip install -r requirements.txt`
 
@@ -31,16 +37,6 @@ You can review the documentation and available endpoints at http://localhost:500
 `Content-Type: application/json`
 
 `{username:"Your username", password:"Your password"}`
-
-### Analyzing sentiments
-
-` POST http://localhost:5000/api/v1/analyse/`
-
-`Content-Type: application/json`
-
-`Authorization: bearer "Token received"`
-
-`{text:"Testing the api"}`
 
 ## Docker
 

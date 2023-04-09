@@ -24,7 +24,7 @@ def create_app():
     #Routes:
     @app.route("/")
     def index():
-        return jsonify({"message":"WELCOME TO SENTIMENT ANALYSIS!"})
+        return jsonify({"message":"Welcome to ModelsRest!"})
 
     #Error handler
     @app.errorhandler(404)
