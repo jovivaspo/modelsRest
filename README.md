@@ -51,3 +51,5 @@ After initial development, build the image with the included Dockerfile by runni
 
 Once your image has been built and loaded locally, run your application by running:<br>
 `docker run --env-file .env -p 5000:5000 modelrest`
+
+![Documentation ModelsRest](https://res.cloudinary.com/dme5pqzrj/image/upload/q_100/v1681057317/modelrest_hcpmos.jpg)
