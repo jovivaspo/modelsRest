@@ -3,7 +3,7 @@ from os import getenv
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import create_access_token
 
-api = Namespace("login", description="Login")
+api = Namespace("login", description="Login in the Api and receive token")
 
 user_model = api.model("User",{
     'username':fields.String(required=True, description="Name of the user"),

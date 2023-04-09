@@ -3,14 +3,14 @@ from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required
 from flask import request
 
-api = Namespace("analyse", description="Sentiment analysis")
+api = Namespace("analyse", description="Sentiment analysis. Analyses the sentiment (positive, neutral or negative) of a given text by giving a score between 0 and 1.")
 
-text_model = api.model("Text",{
+text_model = api.model("Text_To_Analyse",{
     'text':fields.String(required=True, description="Text to analyse"),
 
 })
 
-result_model = api.model("Result",{
+result_model = api.model("Result_Analysis",{
   'label':fields.String(required=True, description="Positive or negative"),
   'score':fields.String(required=True, description="Scoring of the analysis 0-1")
 })
@@ -28,7 +28,6 @@ class Analyse(Resource):
   @jwt_required()
   def post(self):
     try:
-        print("Hola")
         text = request.json['text']
 
         if text == "" or text == " ":

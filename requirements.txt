@@ -8,4 +8,11 @@ scipy
 flask-restx
 flask-jwt-extended
 MarkupSafe==2.0.1
+keyBert
+
+sentencepiece==0.1.97
+sentence_transformers
+unicodedata2
+pylev
+protobuf==3.20.0
 
